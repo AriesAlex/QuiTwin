@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        shell: pwsh
+        run: |
+          rustup set auto-self-update disable
+          rustup toolchain install stable --profile minimal
+          rustup default stable
+
+      - name: Verify tag matches Cargo version
+        shell: pwsh
+        run: |
+          $manifest = Get-Content -Raw Cargo.toml
+          $version = [regex]::Match($manifest, '(?m)^version = "([^"]+)"$').Groups[1].Value
+          if ($env:GITHUB_REF_NAME -ne "v$version") {
+            throw "Tag $env:GITHUB_REF_NAME does not match Cargo version $version"
+          }
+
+      - name: Test
+        run: cargo test --all-targets --locked
+
+      - name: Build
+        run: cargo build --release --locked
+
+      - name: Package
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path dist | Out-Null
+          Copy-Item target/release/quitwin.exe dist/QuiTwin.exe
+          $hash = (Get-FileHash dist/QuiTwin.exe -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  QuiTwin.exe" | Set-Content -NoNewline -Encoding ascii dist/QuiTwin.exe.sha256
+
+      - name: Create GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create $env:GITHUB_REF_NAME `
+            dist/QuiTwin.exe `
+            dist/QuiTwin.exe.sha256 `
+            --repo $env:GITHUB_REPOSITORY `
+            --title "QuiTwin $env:GITHUB_REF_NAME" `
+            --generate-notes
