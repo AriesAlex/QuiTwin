@@ -6,6 +6,11 @@
 
 **A one-click, update-resistant Equicord launcher for Discord on Windows.**
 
+<p align="center">
+  <a href="https://github.com/AriesAlex/QuiTwin/releases/latest/download/QuiTwin.exe"><img src="https://img.shields.io/badge/Download-QuiTwin.exe-5865F2?style=for-the-badge&logo=windows11&logoColor=white" alt="Download QuiTwin.exe"></a>
+</p>
+<p align="center"><strong>Download. Run once. Done.</strong></p>
+
 [![CI](https://github.com/AriesAlex/QuiTwin/actions/workflows/ci.yml/badge.svg)](https://github.com/AriesAlex/QuiTwin/actions/workflows/ci.yml)
 [![Latest release](https://img.shields.io/github/v/release/AriesAlex/QuiTwin)](https://github.com/AriesAlex/QuiTwin/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -17,7 +22,7 @@ If Vencord or Equicord keeps disappearing after Discord updates, QuiTwin is buil
 
 ## Download and install
 
-1. Download **`QuiTwin.exe`** from the [latest release](https://github.com/AriesAlex/QuiTwin/releases/latest).
+1. [Download **`QuiTwin.exe`**](https://github.com/AriesAlex/QuiTwin/releases/latest/download/QuiTwin.exe).
 2. Run it once.
 3. Done. Start Discord normally from its existing shortcut.
 
