@@ -1,118 +1,22 @@
 {
   "meta": {
-    "title": "QuiTwin - إبقاء Equicord بعد تحديثات Discord",
-    "description": "هل يختفي Vencord أو Equicord بعد تحديث Discord؟ يثبت QuiTwin مشغل Equicord مقاوما للتحديثات على Windows بتشغيل واحد.",
+    "title": "QuiTwin - يحافظ على تثبيت Equicord بعد تحديثات Discord",
+    "description": "يثبّت QuiTwin تطبيق Equicord مرة واحدة ويحافظ على عمله بعد تحديثات Discord على Windows. بلا خدمة أو مهمة مجدولة أو إعادة ترقيع.",
     "ogAlt": "يحافظ QuiTwin على تثبيت Equicord بعد تحديثات Discord"
   },
   "a11y": {
-    "skip": "الانتقال إلى المحتوى",
-    "primaryNav": "التنقل الرئيسي",
-    "home": "صفحة QuiTwin الرئيسية",
-    "productFacts": "معلومات منتج QuiTwin",
-    "logoAlt": "علامة QuiTwin بحرفي Q متداخلين بالبنفسجي والسماوي",
-    "status": "حالة المشروع",
-    "verified": "سلوكيات QuiTwin التي تم التحقق منها"
+    "home": "الصفحة الرئيسية لـ QuiTwin",
+    "logoAlt": "شعار QuiTwin بحرفي Q متداخلين بالبنفسجي والسماوي"
   },
   "nav": {
-    "how": "كيف يعمل",
-    "source": "المصدر",
-    "language": "اختيار اللغة",
-    "download": "تنزيل"
+    "language": "اختيار اللغة"
   },
   "hero": {
-    "titleFirst": "يتحدث Discord.",
-    "titleSecond": "ويبقى Equicord.",
-    "lede": "يثبت QuiTwin كلا من Discord وEquicord ومشغلا مقاوما للتحديثات. بلا خدمة خلفية أو مهمة مجدولة أو إعادة ترقيع.",
-    "download": "تنزيل QuiTwin.exe",
+    "title": "يتلقى Discord تحديثاته. ويبقى Equicord.",
+    "copy": "يثبّت QuiTwin تطبيق Discord عند الحاجة، ويضيف Equicord، ويبقيه عاملا بعد التحديثات. بلا خدمة خلفية أو إعادة ترقيع.",
+    "download": "تنزيل QuiTwin",
     "platform": "Windows x64",
-    "mechanism": "عرض الآلية",
-    "fineprint": "شغله مرة واحدة. يحذف ملف EXE الذي نزلته نفسه بعد نجاح التثبيت.",
-    "brandLineOne": "بيئة تشغيل توأم",
-    "brandLineTwo": "لمضيف أصلي واحد",
-    "statExe": "ملف EXE محمول",
-    "statServices": "خدمات خلفية",
-    "statRuntime": "بيئة hardlink"
-  },
-  "trust": {
-    "license": "ترخيص MIT",
-    "source": "مصدر علني",
-    "channels": "Stable وPTB وCanary",
-    "windows": "Windows 10 و11"
-  },
-  "problem": {
-    "title": "لماذا يختفي التعديل باستمرار؟",
-    "copyOne": "ترقع مثبتات Vencord وEquicord التقليدية مضيف Discord الفعلي. يستبدل تحديث Discord هذا المضيف بنسخة أصلية جديدة، فيختفي الترقيع.",
-    "copyTwo": "تفيد إعادة التثبيت حتى التحديث التالي. ويفيد منع التحديثات حتى يرفض Discord التشغيل. يغير QuiTwin حدود التشغيل نفسها بدلا من ذلك."
-  },
-  "mechanism": {
-    "titleFirst": "أبق المضيف نظيفا.",
-    "titleSecond": "وعدل توأمه.",
-    "intro": "يحدث Discord التثبيت الذي يعرفه. ويعمل Equicord من ظل موجه بالمحتوى ومبني من الملفات نفسها.",
-    "steps": {
-      "stock": {
-        "title": "إبقاء Discord أصليا",
-        "copy": "يبقى مجلد التطبيق الحقيقي قابلا للتحديث بايتا ببايت، كي يعمل محدث Discord الأصلي."
-      },
-      "twin": {
-        "title": "إنشاء توأم عبر hardlink",
-        "copy": "ينشئ QuiTwin بيئة ظل ثابتة من روابط NTFS الصلبة بلا نسخ تثبيت Discord بالكامل."
-      },
-      "equicord": {
-        "title": "تحميل Equicord هناك",
-        "copy": "يعمل Equicord داخل التوأم بينما يستمر Discord في رؤية مسارات الملف التنفيذي والموارد الأصلية."
-      },
-      "rebuild": {
-        "title": "إعادة البناء بعد التحديث",
-        "copy": "عندما يغير Discord المضيف، يعيد التشغيل التالي الحالة الأصلية وينشئ توأما معدلا جديدا."
-      }
-    }
-  },
-  "safeguards": {
-    "title": "مصمم للتحديث الصعب، لا للعرض المثالي.",
-    "items": {
-      "process": {
-        "title": "لا توجد عملية مقيمة",
-        "copy": "يجهز QuiTwin بيئة التشغيل ويشغل Discord ثم يغلق. لا شيء ينتظر في شريط النظام أو يعمل كخدمة."
-      },
-      "atomic": {
-        "title": "نشر ذري",
-        "copy": "تجهز التنزيلات وأجيال بيئة التشغيل وتكتب على القرص ثم تنشر بصورة ذرية."
-      },
-      "native": {
-        "title": "التحديثات الأصلية تبقى أصلية",
-        "copy": "يحتفظ Discord بمحدثه ومضيفه الأصليين. لا يعيد QuiTwin تنفيذ Squirrel ولا يجمد العميل."
-      },
-      "cleanup": {
-        "title": "ملف واحد يدخل ولا تبقى مخلفات",
-        "copy": "يسلم المثبت المحمول المهمة إلى المشغل المثبت، ثم يغلق ويحذف قبل تشغيل صوت النجاح."
-      }
-    }
-  },
-  "proof": {
-    "title": "فرضنا حالة العطل عمدا.",
-    "copy": "جعلنا مضيف Discord حقيقيا قديما ثم حدثناه بالمحدث الأصلي. فشل تحديث delta واكتمل البديل الكامل، ونجا Equicord من إعادة التشغيل المباشرة، ثم أعاد التشغيل العادي التالي المضيف إلى حالته الأصلية.",
-    "host": "تحديث مضيف Discord",
-    "completed": "اكتمل",
-    "restart": "إعادة تشغيل Equicord المباشرة",
-    "survived": "نجت",
-    "portable": "المشغل المحمول",
-    "deleted": "حذف",
-    "resident": "عملية QuiTwin مقيمة",
-    "none": "لا توجد"
-  },
-  "install": {
-    "lineOne": "نزل.",
-    "lineTwo": "شغل مرة.",
-    "lineThree": "تم.",
-    "copy": "يعثر QuiTwin على Discord أينما كان، أو يثبت Stable إن لم يكن موجودا. ثم يثبت Equicord ويشغل Discord ويحذف ملف EXE المحمول ويبتعد.",
-    "button": "تنزيل QuiTwin.exe",
-    "latest": "أحدث إصدار",
-    "risk": "لا يدعم Discord تعديلات العميل وقد تخالف شروط خدمته. استخدمها على مسؤوليتك."
-  },
-  "footer": {
-    "by": "QuiTwin من ArieX",
-    "releases": "ملاحظات الإصدارات",
-    "license": "ترخيص MIT",
-    "independent": "مشروع مستقل عن Discord وEquicord وVencord وSquirrel."
+    "github": "GitHub",
+    "after": "شغّله مرة واحدة. يحذف المثبّت نفسه بعد نجاح الإعداد."
   }
 }

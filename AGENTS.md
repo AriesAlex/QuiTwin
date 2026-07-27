@@ -31,12 +31,21 @@ QuiTwin is a Windows x64 Rust application that acts as both a portable installer
 
 ## Landing site
 
-- `site/` is a Nuxt 3 static site built with pnpm, Vue, and plain CSS. Do not introduce React, Tailwind, or a UI framework.
-- Keep the design restrained and product-specific. Do not add eyebrow labels above headings, AI-style gradients, ornamental blur, generic feature-card grids, nested cards, decorative stat badges, or numbered markers that do not communicate sequence or state.
-- Do not scaffold pages as a routine hero / three benefits / testimonials / CTA stack. Let the real installer mechanism and evidence determine the information architecture.
+- `site/` is a Nuxt 3 static site built with pnpm, Vue, and SCSS. Do not introduce React, Tailwind, or a UI framework.
+- Keep Vue SFCs ordered as `<template>`, `<script>`, then `<style>`.
+- Keep component styles next to their markup in `<style scoped lang="scss">`. Put only shared tokens, resets, and genuinely global rules in `site/assets/styles/`; do not grow a detached page-level stylesheet.
+- Use nested SCSS where it makes the component hierarchy clearer, without BEM-style class names or deeply coupled selectors.
+- Keep this landing page to the shortest shape that explains and downloads the utility. Its default information architecture is one self-contained hero, not a marketing funnel.
+- Keep the design restrained and product-specific. Do not add eyebrow labels above headings, AI-style gradients, ornamental blur, generic feature-card grids, nested cards, trust strips, proof ledgers, decorative stat badges, technical metrics, or numbered markers that do not communicate necessary sequence or state.
+- Do not scaffold pages as a routine hero / three benefits / testimonials / CTA stack. Do not expand a small utility into a long SaaS-style sales page.
+- Use whitespace and typography for grouping. Borders must communicate a real boundary or state; never use them as page scaffolding or wrap every section, control, and fact in a rectangle.
+- Keep interactive shapes and spacing consistent. Prefer calm filled controls and avoid a page made from boxes inside boxes.
 - Prefer flex for simple one-dimensional layout and use grid only when the content has a real two-dimensional relationship.
+- Use the project's icon library for interface and brand icons instead of hand-drawn SVGs or text glyph substitutes.
 - Keep the GitHub Pages base path configurable through `NUXT_APP_BASE_URL`; never hardcode asset paths that break `/QuiTwin/`.
 - All user-facing copy and metadata must exist for EN, RU, SR, PL, TR, FR, AR, and ZH. Keep locale objects centralized in `site/shared/locales.ts`.
+- Treat translations as native copy adaptations, not line-by-line translations. Preserve meaning and brevity while using natural phrasing for each locale.
+- Browser-language detection must run before the first paint on the unprefixed static route. Never accept a visible English render followed by a client-side locale redirect.
 - Every locale must remain prerendered and indexable with the correct `lang`, `dir`, canonical URL, hreflang alternates, Open Graph metadata, and JSON-LD.
 - Keep RTL and both desktop and mobile layouts visually verified in the user's real browser. Fix layout from parent structure downward rather than compensating with negative offsets.
 - Keep CSS manually understandable: clear variables, simple breakpoints, no compensating negative offsets, and modern functions only where they remove duplication.
@@ -68,5 +77,5 @@ Before handoff, review `git diff` and `git status --short` as a reviewer. Confir
 ## Releases
 
 - `Cargo.toml` is the version source. Release tags must be exactly `v<version>`.
-- Let GitHub Actions build the public binary and checksum from the tagged source.
-- Do not call a release complete until CI, Pages deployment, the GitHub release, the direct latest-download URL, and its checksum have all been verified from the public endpoints.
+- Let GitHub Actions build the public binary from the tagged source. Do not publish a redundant `.sha256` sidecar when GitHub exposes the release asset digest.
+- Do not call a release complete until CI, Pages deployment, the GitHub release, the direct latest-download URL, and GitHub's published asset digest have all been verified from the public endpoints.

@@ -639,7 +639,7 @@ dependencies = [
 
 [[package]]
 name = "quitwin"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "anyhow",
  "hex",

@@ -1,4 +1,73 @@
+<template>
+  <div class="page">
+    <header>
+      <a class="wordmark" :href="baseURL" :aria-label="t('a11y.home')" translate="no">
+        <img :src="`${baseURL}icon.png`" alt="" width="38" height="38">
+        <span>QuiTwin</span>
+      </a>
+
+      <details class="language">
+        <summary :aria-label="t('nav.language')">
+          <PhGlobeSimple :size="20" weight="bold" />
+          <span>{{ activeLocale.short }}</span>
+        </summary>
+        <nav>
+          <NuxtLink
+            v-for="item in SITE_LOCALES"
+            :key="item.code"
+            :to="switchLocalePath(item.code)"
+            :hreflang="item.language"
+            :lang="item.language"
+            :aria-current="item.code === locale ? 'page' : undefined"
+            @click="rememberLocale(item.code)"
+          >
+            <span>{{ item.name }}</span>
+            <small>{{ item.short }}</small>
+          </NuxtLink>
+        </nav>
+      </details>
+    </header>
+
+    <main>
+      <section>
+        <h1>{{ t('hero.title') }}</h1>
+        <p class="copy">{{ t('hero.copy') }}</p>
+
+        <div class="actions">
+          <a class="download" :href="downloadUrl">
+            <PhDownloadSimple :size="22" weight="bold" />
+            <span>
+              <strong>{{ t('hero.download') }}</strong>
+              <small>{{ t('hero.platform') }}</small>
+            </span>
+          </a>
+          <a class="github" :href="repositoryUrl" target="_blank" rel="noopener noreferrer">
+            <PhGithubLogo :size="23" weight="fill" />
+            <span>{{ t('hero.github') }}</span>
+          </a>
+        </div>
+
+        <p class="after">{{ t('hero.after') }}</p>
+
+        <p class="credits">ArieX · MIT</p>
+      </section>
+
+      <figure>
+        <img
+          :src="`${baseURL}icon.png`"
+          :alt="t('a11y.logoAlt')"
+          width="720"
+          height="720"
+          fetchpriority="high"
+        >
+      </figure>
+    </main>
+  </div>
+</template>
+
 <script setup lang="ts">
+import { PhDownloadSimple, PhGithubLogo, PhGlobeSimple } from '@phosphor-icons/vue'
+
 import { SITE_LOCALES } from '~/shared/locales'
 
 const downloadUrl = 'https://github.com/AriesAlex/QuiTwin/releases/latest/download/QuiTwin.exe'
@@ -9,20 +78,11 @@ const baseURL = runtimeConfig.app.baseURL
 const { locale, t } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const i18nHead = useLocaleHead({ seo: true })
-
-const flow = [
-  { number: '01', key: 'stock' },
-  { number: '02', key: 'twin' },
-  { number: '03', key: 'equicord' },
-  { number: '04', key: 'rebuild' },
-] as const
-
-const safeguards = [
-  { key: 'process', size: 'wide' },
-  { key: 'atomic', size: 'compact' },
-  { key: 'native', size: 'tall' },
-  { key: 'cleanup', size: 'wide' },
-] as const
+const localeCookie = useCookie('quitwin_locale', {
+  path: '/',
+  sameSite: 'lax',
+  maxAge: 60 * 60 * 24 * 365,
+})
 
 const activeLocale = computed(() =>
   SITE_LOCALES.find(item => item.code === locale.value) ?? SITE_LOCALES[0],
@@ -34,6 +94,10 @@ const localizedUrl = computed(() => {
 const metaTitle = computed(() => t('meta.title'))
 const metaDescription = computed(() => t('meta.description'))
 const metaImageAlt = computed(() => t('meta.ogAlt'))
+
+function rememberLocale(code: string) {
+  localeCookie.value = code
+}
 
 useSeoMeta({
   title: metaTitle,
@@ -59,8 +123,7 @@ useHead(() => ({
   ],
   meta: [
     ...(i18nHead.value.meta ?? []),
-    { name: 'theme-color', content: '#08090d', media: '(prefers-color-scheme: dark)' },
-    { name: 'theme-color', content: '#f4f2ed', media: '(prefers-color-scheme: light)' },
+    { name: 'theme-color', content: '#08090d' },
     { name: 'robots', content: 'index, follow' },
   ],
   script: [
@@ -95,201 +158,363 @@ useHead(() => ({
 }))
 </script>
 
-<template>
-  <a class="skip-link" href="#main">{{ t('a11y.skip') }}</a>
+<style scoped lang="scss">
+@use '../assets/styles/tokens' as *;
 
-  <header class="site-header">
-    <nav class="site-nav" :aria-label="t('a11y.primaryNav')">
-      <a class="wordmark" href="#top" :aria-label="t('a11y.home')" translate="no">
-        <img :src="`${baseURL}icon.png`" alt="" width="40" height="40">
-        <span>QuiTwin</span>
-      </a>
+.page {
+  width: min(100%, 1280px);
+  height: 100svh;
+  min-height: 100svh;
+  padding: clamp(22px, 3.5vw, 48px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
 
-      <div class="nav-links">
-        <a href="#how-it-works">{{ t('nav.how') }}</a>
-        <a :href="repositoryUrl" target="_blank" rel="noopener noreferrer">{{ t('nav.source') }} ↗</a>
+header {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-        <details class="language-picker">
-          <summary :aria-label="t('nav.language')">
-            <span>{{ activeLocale.short }}</span>
-            <span aria-hidden="true">+</span>
-          </summary>
-          <div class="language-menu">
-            <NuxtLink
-              v-for="item in SITE_LOCALES"
-              :key="item.code"
-              :to="switchLocalePath(item.code)"
-              :hreflang="item.language"
-              :lang="item.language"
-              :aria-current="item.code === locale ? 'page' : undefined"
-            >
-              <span>{{ item.short }}</span>
-              <span>{{ item.name }}</span>
-            </NuxtLink>
-          </div>
-        </details>
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 1.08rem;
+  font-weight: 680;
+  letter-spacing: -0.035em;
 
-        <a class="nav-download" :href="downloadUrl">{{ t('nav.download') }}</a>
-      </div>
-    </nav>
-  </header>
+  img {
+    width: 38px;
+    height: 38px;
+  }
+}
 
-  <main id="main">
-    <section id="top" class="hero" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <h1 id="hero-title">
-          {{ t('hero.titleFirst') }}<br>
-          <span>{{ t('hero.titleSecond') }}</span>
-        </h1>
-        <p class="hero-lede">{{ t('hero.lede') }}</p>
-        <div class="hero-actions">
-          <a class="button button-primary" :href="downloadUrl">
-            <span>{{ t('hero.download') }}</span>
-            <small>{{ t('hero.platform') }}</small>
-          </a>
-          <a class="text-link" href="#how-it-works">{{ t('hero.mechanism') }} ↓</a>
-        </div>
-        <p class="hero-fineprint">{{ t('hero.fineprint') }}</p>
-      </div>
+.language {
+  position: relative;
 
-      <div class="hero-visual" :aria-label="t('a11y.productFacts')">
-        <div class="brand-field">
-          <span class="brand-index">QT / 01</span>
-          <img
-            class="hero-mark"
-            :src="`${baseURL}icon.png`"
-            :alt="t('a11y.logoAlt')"
-            width="720"
-            height="720"
-            fetchpriority="high"
-          >
-          <span class="brand-caption">{{ t('hero.brandLineOne') }}<br>{{ t('hero.brandLineTwo') }}</span>
-        </div>
-        <dl class="hero-stats">
-          <div>
-            <dt>1</dt>
-            <dd>{{ t('hero.statExe') }}</dd>
-          </div>
-          <div>
-            <dt>0</dt>
-            <dd>{{ t('hero.statServices') }}</dd>
-          </div>
-          <div>
-            <dt>NTFS</dt>
-            <dd>{{ t('hero.statRuntime') }}</dd>
-          </div>
-        </dl>
-      </div>
-    </section>
+  summary {
+    min-height: 42px;
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    border-radius: 999px;
+    background: $surface;
+    color: $muted;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 680;
+    transition: color 160ms ease, background 160ms ease;
 
-    <aside class="trust-strip" :aria-label="t('a11y.status')">
-      <span>{{ t('trust.license') }}</span>
-      <span>{{ t('trust.source') }}</span>
-      <span>{{ t('trust.channels') }}</span>
-      <span>{{ t('trust.windows') }}</span>
-    </aside>
+    &::-webkit-details-marker {
+      display: none;
+    }
 
-    <section class="problem reveal" aria-labelledby="problem-title">
-      <div class="section-number" aria-hidden="true">01</div>
-      <div class="problem-heading">
-        <h2 id="problem-title">{{ t('problem.title') }}</h2>
-      </div>
-      <div class="problem-copy">
-        <p>{{ t('problem.copyOne') }}</p>
-        <p>{{ t('problem.copyTwo') }}</p>
-      </div>
-    </section>
+    &:hover {
+      background: $surface-hover;
+      color: $text;
+    }
+  }
 
-    <section id="how-it-works" class="mechanism reveal" aria-labelledby="mechanism-title">
-      <div class="mechanism-intro">
-        <h2 id="mechanism-title">
-          {{ t('mechanism.titleFirst') }}<br>{{ t('mechanism.titleSecond') }}
-        </h2>
-        <p>{{ t('mechanism.intro') }}</p>
-      </div>
+  &[open] summary {
+    background: $surface-hover;
+    color: $text;
+  }
 
-      <ol class="flow-list">
-        <li v-for="step in flow" :key="step.number">
-          <span class="flow-number">{{ step.number }}</span>
-          <div>
-            <h3>{{ t(`mechanism.steps.${step.key}.title`) }}</h3>
-            <p>{{ t(`mechanism.steps.${step.key}.copy`) }}</p>
-          </div>
-        </li>
-      </ol>
-    </section>
+  nav {
+    position: absolute;
+    top: calc(100% + 10px);
+    inset-inline-end: 0;
+    width: 210px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 18px;
+    background: $menu;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.46);
 
-    <section class="safeguards reveal" aria-labelledby="safeguards-title">
-      <div class="safeguards-heading">
-        <h2 id="safeguards-title">{{ t('safeguards.title') }}</h2>
-      </div>
+    a {
+      min-height: 40px;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-radius: 12px;
+      color: $muted;
+      font-size: 0.88rem;
+      transition: color 140ms ease, background 140ms ease;
 
-      <div class="safeguard-grid">
-        <article
-          v-for="item in safeguards"
-          :key="item.key"
-          class="safeguard"
-          :class="`safeguard-${item.size}`"
-        >
-          <h3>{{ t(`safeguards.items.${item.key}.title`) }}</h3>
-          <p>{{ t(`safeguards.items.${item.key}.copy`) }}</p>
-        </article>
-      </div>
-    </section>
+      &:hover,
+      &[aria-current='page'] {
+        background: $surface;
+        color: $text;
+      }
+    }
 
-    <section class="proof reveal" aria-labelledby="proof-title">
-      <div class="proof-copy">
-        <h2 id="proof-title">{{ t('proof.title') }}</h2>
-        <p>{{ t('proof.copy') }}</p>
-      </div>
+    small {
+      color: $faint;
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+  }
+}
 
-      <div class="proof-ledger" :aria-label="t('a11y.verified')">
-        <div>
-          <span>{{ t('proof.host') }}</span>
-          <strong>{{ t('proof.completed') }}</strong>
-        </div>
-        <div>
-          <span>{{ t('proof.restart') }}</span>
-          <strong>{{ t('proof.survived') }}</strong>
-        </div>
-        <div>
-          <span>{{ t('proof.portable') }}</span>
-          <strong>{{ t('proof.deleted') }}</strong>
-        </div>
-        <div>
-          <span>{{ t('proof.resident') }}</span>
-          <strong>{{ t('proof.none') }}</strong>
-        </div>
-      </div>
-    </section>
+main {
+  flex: 1;
+  min-height: 0;
+  padding: clamp(46px, 7vh, 92px) 0 clamp(20px, 3vh, 40px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(40px, 7vw, 110px);
+}
 
-    <section class="install reveal" aria-labelledby="install-title">
-      <div>
-        <h2 id="install-title">
-          {{ t('install.lineOne') }}<br>{{ t('install.lineTwo') }}<br>{{ t('install.lineThree') }}
-        </h2>
-      </div>
-      <div class="install-action">
-        <p>{{ t('install.copy') }}</p>
-        <a class="button button-light" :href="downloadUrl">
-          <span>{{ t('install.button') }}</span>
-          <small>{{ t('install.latest') }}</small>
-        </a>
-        <p class="risk-note">{{ t('install.risk') }}</p>
-      </div>
-    </section>
-  </main>
+section {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 660px;
+  max-width: 720px;
+}
 
-  <footer class="site-footer">
-    <div class="footer-brand">
-      <img :src="`${baseURL}icon.png`" alt="" width="34" height="34">
-      <span>{{ t('footer.by') }}</span>
-    </div>
-    <div class="footer-links">
-      <a :href="repositoryUrl" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-      <a href="https://github.com/AriesAlex/QuiTwin/releases/latest" target="_blank" rel="noopener noreferrer">{{ t('footer.releases') }} ↗</a>
-      <a href="https://github.com/AriesAlex/QuiTwin/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">{{ t('footer.license') }} ↗</a>
-    </div>
-    <p>{{ t('footer.independent') }}</p>
-  </footer>
-</template>
+h1 {
+  max-width: 11ch;
+  font-size: clamp(4rem, 7.6vw, 7.4rem);
+  font-weight: 620;
+  line-height: 0.9;
+  letter-spacing: -0.075em;
+  text-wrap: balance;
+}
+
+.copy {
+  max-width: 600px;
+  margin-top: clamp(24px, 4vh, 38px);
+  color: $muted;
+  font-size: clamp(1rem, 1.45vw, 1.2rem);
+  line-height: 1.55;
+  letter-spacing: -0.02em;
+}
+
+.actions {
+  margin-top: clamp(28px, 4.5vh, 42px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  a {
+    min-height: 58px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    font-weight: 650;
+    transition: transform 160ms ease, background 160ms ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.download {
+  min-width: min(100%, 250px);
+  padding: 0 22px;
+  gap: 13px;
+  background: $accent;
+  color: white;
+  box-shadow: 0 14px 36px rgba($accent, 0.2);
+
+  &:hover {
+    background: $accent-hover;
+  }
+
+  span {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  strong {
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  small {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.67rem;
+    font-weight: 550;
+  }
+}
+
+.github {
+  min-width: 132px;
+  padding: 0 20px;
+  gap: 9px;
+  background: $surface;
+  color: $text;
+
+  &:hover {
+    background: $surface-hover;
+  }
+}
+
+.after {
+  margin-top: 16px;
+  color: $faint;
+  font-size: 0.78rem;
+}
+
+.credits {
+  margin-top: clamp(34px, 6vh, 68px);
+  color: $faint;
+  font-size: 0.72rem;
+}
+
+figure {
+  flex: 0 1 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: min(34vw, 460px);
+    min-width: 260px;
+    filter: drop-shadow(0 34px 58px rgba($accent, 0.2));
+  }
+}
+
+:global(html[dir='rtl']) {
+  h1,
+  .copy,
+  .after,
+  .credits {
+    letter-spacing: 0;
+  }
+
+  .download span {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 780px) {
+  .page {
+    height: auto;
+    padding: 20px;
+    overflow: hidden;
+  }
+
+  main {
+    padding: 54px 0 26px;
+  }
+
+  section {
+    max-width: 620px;
+  }
+
+  h1 {
+    max-width: 10ch;
+    font-size: clamp(3.45rem, 15vw, 5.3rem);
+  }
+
+  .copy {
+    max-width: 540px;
+    font-size: 1rem;
+  }
+
+  figure {
+    position: absolute;
+    inset-inline-end: 0;
+    bottom: 0;
+    z-index: 0;
+    width: 48vw;
+    height: 55vh;
+    align-items: flex-end;
+    justify-content: flex-start;
+    overflow: hidden;
+    opacity: 0.13;
+    pointer-events: none;
+
+    img {
+      width: 70vw;
+      min-width: 0;
+      max-width: none;
+      filter: none;
+    }
+  }
+
+  .credits {
+    max-width: 37ch;
+  }
+}
+
+@media (max-width: 500px) {
+  .actions {
+    a {
+      min-width: 0;
+    }
+  }
+
+  .download {
+    flex: 1;
+    padding-inline: 14px;
+  }
+
+  .github {
+    flex: 0 0 112px;
+    padding-inline: 12px;
+  }
+
+  .credits {
+    margin-top: 26px;
+  }
+
+  :lang(ru) h1,
+  :lang(sr) h1,
+  :lang(pl) h1,
+  :lang(tr) h1,
+  :lang(fr) h1 {
+    font-size: clamp(2.85rem, 12.5vw, 4.15rem);
+    line-height: 0.96;
+  }
+
+  :lang(ar) h1 {
+    font-size: clamp(3rem, 13vw, 4.3rem);
+    line-height: 1.05;
+  }
+
+  :lang(zh) h1 {
+    font-size: clamp(3.15rem, 14vw, 4.5rem);
+    line-height: 1.05;
+  }
+}
+
+@media (max-width: 350px) {
+  .actions {
+    align-items: stretch;
+    flex-direction: column;
+
+    a {
+      width: 100%;
+    }
+  }
+
+  .github {
+    flex-basis: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .actions a {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+</style>

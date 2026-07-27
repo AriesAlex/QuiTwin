@@ -48,6 +48,17 @@ for (const locale of locales) {
     throw new Error(`${locale.route || 'en'} does not expose every hreflang alternate`)
 }
 
+const rootHtml = await readFile(join(output, 'index.html'), 'utf8')
+const localeBootstrap = rootHtml.indexOf('data-hid="locale-bootstrap"')
+const firstStylesheet = rootHtml.indexOf('rel="stylesheet"')
+
+if (localeBootstrap === -1)
+  throw new Error('The root page is missing the pre-paint locale bootstrap')
+if (!rootHtml.includes("document.documentElement.style.visibility = 'hidden'"))
+  throw new Error('The locale bootstrap does not hide the default locale before redirecting')
+if (firstStylesheet !== -1 && localeBootstrap > firstStylesheet)
+  throw new Error('The locale bootstrap runs too late to prevent a default-locale flash')
+
 for (const asset of ['favicon.ico', 'icon.png', 'og.png', 'robots.txt', 'sitemap.xml']) {
   const path = join(output, asset)
   await access(path)

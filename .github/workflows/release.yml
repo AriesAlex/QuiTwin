@@ -40,8 +40,6 @@ jobs:
         run: |
           New-Item -ItemType Directory -Path dist | Out-Null
           Copy-Item target/release/quitwin.exe dist/QuiTwin.exe
-          $hash = (Get-FileHash dist/QuiTwin.exe -Algorithm SHA256).Hash.ToLowerInvariant()
-          "$hash  QuiTwin.exe" | Set-Content -NoNewline -Encoding ascii dist/QuiTwin.exe.sha256
 
       - name: Create GitHub release
         shell: pwsh
@@ -50,7 +48,6 @@ jobs:
         run: |
           gh release create $env:GITHUB_REF_NAME `
             dist/QuiTwin.exe `
-            dist/QuiTwin.exe.sha256 `
             --repo $env:GITHUB_REPOSITORY `
             --title "QuiTwin $env:GITHUB_REF_NAME" `
             --generate-notes

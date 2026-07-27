@@ -1,118 +1,22 @@
 {
   "meta": {
-    "title": "QuiTwin - Equicord that survives Discord updates",
-    "description": "Vencord or Equicord keeps disappearing after Discord updates? QuiTwin installs an update-safe Equicord launcher for Windows in one run.",
+    "title": "QuiTwin - Keep Equicord installed through Discord updates",
+    "description": "QuiTwin installs Equicord once and keeps it working through Discord updates on Windows. No service, scheduled task, or repeat patching.",
     "ogAlt": "QuiTwin keeps Equicord installed through Discord updates"
   },
   "a11y": {
-    "skip": "Skip to content",
-    "primaryNav": "Primary navigation",
     "home": "QuiTwin home",
-    "productFacts": "QuiTwin product facts",
-    "logoAlt": "QuiTwin interlocking Q mark in violet and cyan",
-    "status": "Project status",
-    "verified": "Verified QuiTwin behaviors"
+    "logoAlt": "QuiTwin interlocking Q mark in violet and cyan"
   },
   "nav": {
-    "how": "How it works",
-    "source": "Source",
-    "language": "Choose language",
-    "download": "Download"
+    "language": "Choose language"
   },
   "hero": {
-    "titleFirst": "Discord updates.",
-    "titleSecond": "Equicord stays.",
-    "lede": "QuiTwin installs Discord, Equicord, and an update-safe launcher. No service. No scheduled task. No patch ritual.",
-    "download": "Download QuiTwin.exe",
+    "title": "Discord updates. Equicord stays.",
+    "copy": "QuiTwin installs Discord when needed, adds Equicord, and keeps it attached across updates. No background service or repeat patching.",
+    "download": "Download QuiTwin",
     "platform": "Windows x64",
-    "mechanism": "See the mechanism",
-    "fineprint": "Run once. The downloaded EXE removes itself when installation succeeds.",
-    "brandLineOne": "A twin runtime",
-    "brandLineTwo": "for one stock host",
-    "statExe": "portable EXE",
-    "statServices": "background services",
-    "statRuntime": "hardlink runtime"
-  },
-  "trust": {
-    "license": "MIT licensed",
-    "source": "Public source",
-    "channels": "Stable, PTB, Canary",
-    "windows": "Windows 10 and 11"
-  },
-  "problem": {
-    "title": "Why does the mod keep disappearing?",
-    "copyOne": "Traditional Vencord and Equicord installers patch the live Discord host. A Discord update replaces that host with a new stock version, so the patch vanishes.",
-    "copyTwo": "Reinstalling works until the next update. Blocking updates works until Discord refuses to start. QuiTwin changes the launch boundary instead."
-  },
-  "mechanism": {
-    "titleFirst": "Keep the host clean.",
-    "titleSecond": "Mod its twin.",
-    "intro": "Discord updates the installation it knows. Equicord runs from a content-addressed shadow made from the same files.",
-    "steps": {
-      "stock": {
-        "title": "Keep Discord stock",
-        "copy": "The real app directory stays byte-for-byte updateable, so the native updater can do its job."
-      },
-      "twin": {
-        "title": "Build a hardlink twin",
-        "copy": "QuiTwin creates an immutable shadow runtime from NTFS hardlinks, without duplicating the full Discord install."
-      },
-      "equicord": {
-        "title": "Load Equicord there",
-        "copy": "Equicord runs in the twin while Discord still sees its original executable and resources paths."
-      },
-      "rebuild": {
-        "title": "Rebuild after updates",
-        "copy": "When Discord changes hosts, the next launch restores stock and creates a fresh modded twin."
-      }
-    }
-  },
-  "safeguards": {
-    "title": "Built for the awkward update, not the happy demo.",
-    "items": {
-      "process": {
-        "title": "No resident process",
-        "copy": "QuiTwin prepares the runtime, launches Discord, and exits. Nothing waits in the tray or runs as a service."
-      },
-      "atomic": {
-        "title": "Atomic publication",
-        "copy": "Downloads and runtime generations are staged, flushed, and published atomically."
-      },
-      "native": {
-        "title": "Native updates stay native",
-        "copy": "Discord keeps its own updater and stock host. QuiTwin does not reimplement Squirrel or freeze the client."
-      },
-      "cleanup": {
-        "title": "One file in, zero leftovers",
-        "copy": "The portable installer hands off to the installed launcher, closes, and is deleted before the success sound plays."
-      }
-    }
-  },
-  "proof": {
-    "title": "We forced the failure case.",
-    "copy": "A real Discord host was made stale and updated through the native updater. The delta failed, the full fallback completed, Equicord survived the direct restart, and the next normal launch returned the host to stock.",
-    "host": "Discord host update",
-    "completed": "completed",
-    "restart": "Equicord direct restart",
-    "survived": "survived",
-    "portable": "Portable launcher",
-    "deleted": "deleted",
-    "resident": "Resident QuiTwin process",
-    "none": "none"
-  },
-  "install": {
-    "lineOne": "Download.",
-    "lineTwo": "Run once.",
-    "lineThree": "Done.",
-    "copy": "QuiTwin finds Discord anywhere, or installs Stable if it is missing. It installs Equicord, launches Discord, deletes the portable EXE, and gets out of the way.",
-    "button": "Get QuiTwin.exe",
-    "latest": "Latest release",
-    "risk": "Client mods are unsupported by Discord and may violate its Terms of Service. Use them at your own risk."
-  },
-  "footer": {
-    "by": "QuiTwin by ArieX",
-    "releases": "Release notes",
-    "license": "MIT license",
-    "independent": "Independent from Discord, Equicord, Vencord, and Squirrel."
+    "github": "GitHub",
+    "after": "Run it once. The installer removes itself when setup succeeds."
   }
 }

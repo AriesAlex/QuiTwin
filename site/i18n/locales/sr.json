@@ -1,118 +1,22 @@
 {
   "meta": {
-    "title": "QuiTwin - Equicord koji preživljava Discord ažuriranja",
-    "description": "Vencord ili Equicord nestaje posle Discord ažuriranja? QuiTwin jednim pokretanjem instalira Equicord pokretač otporan na ažuriranja za Windows.",
-    "ogAlt": "QuiTwin čuva Equicord instaliranim kroz Discord ažuriranja"
+    "title": "QuiTwin - Equicord ostaje instaliran i posle Discord ažuriranja",
+    "description": "QuiTwin jednom instalira Equicord i čuva ga i nakon Discord ažuriranja na Windowsu. Bez servisa, zakazanih zadataka i ponovnog krpljenja.",
+    "ogAlt": "QuiTwin čuva Equicord instaliranim i posle Discord ažuriranja"
   },
   "a11y": {
-    "skip": "Pređi na sadržaj",
-    "primaryNav": "Glavna navigacija",
-    "home": "QuiTwin početna",
-    "productFacts": "Činjenice o QuiTwin-u",
-    "logoAlt": "QuiTwin znak sa prepletenim slovima Q u ljubičastoj i cijan boji",
-    "status": "Status projekta",
-    "verified": "Proverena ponašanja QuiTwin-a"
+    "home": "Početna stranica za QuiTwin",
+    "logoAlt": "QuiTwin znak sa prepletenim slovima Q u ljubičastoj i cijan boji"
   },
   "nav": {
-    "how": "Kako radi",
-    "source": "Izvorni kod",
-    "language": "Izaberi jezik",
-    "download": "Preuzmi"
+    "language": "Izaberi jezik"
   },
   "hero": {
-    "titleFirst": "Discord se ažurira.",
-    "titleSecond": "Equicord ostaje.",
-    "lede": "QuiTwin instalira Discord, Equicord i pokretač otporan na ažuriranja. Bez servisa, zakazanih zadataka i stalnog krpljenja.",
-    "download": "Preuzmi QuiTwin.exe",
+    "title": "Discord se ažurira. Equicord ostaje.",
+    "copy": "QuiTwin po potrebi instalira Discord, dodaje Equicord i čuva ga i posle ažuriranja. Bez pozadinskog servisa i ponovnog krpljenja.",
+    "download": "Preuzmi QuiTwin",
     "platform": "Windows x64",
-    "mechanism": "Pogledaj mehanizam",
-    "fineprint": "Pokreni jednom. Preuzeti EXE se sam briše kada instalacija uspe.",
-    "brandLineOne": "Dvostruko okruženje",
-    "brandLineTwo": "za jedan čist host",
-    "statExe": "prenosivi EXE",
-    "statServices": "pozadinskih servisa",
-    "statRuntime": "hardlink okruženje"
-  },
-  "trust": {
-    "license": "MIT licenca",
-    "source": "Javni izvorni kod",
-    "channels": "Stable, PTB, Canary",
-    "windows": "Windows 10 i 11"
-  },
-  "problem": {
-    "title": "Zašto mod stalno nestaje?",
-    "copyOne": "Klasični Vencord i Equicord instaleri krpe aktivni Discord host. Discord ažuriranje ga zameni novom čistom verzijom, pa zakrpa nestane.",
-    "copyTwo": "Ponovna instalacija radi do sledećeg ažuriranja. Blokiranje ažuriranja radi dok Discord ne odbije da se pokrene. QuiTwin umesto toga menja granicu pokretanja."
-  },
-  "mechanism": {
-    "titleFirst": "Host ostaje čist.",
-    "titleSecond": "Moduj njegovog blizanca.",
-    "intro": "Discord ažurira instalaciju koju poznaje. Equicord radi iz senke adresirane sadržajem, napravljene od istih datoteka.",
-    "steps": {
-      "stock": {
-        "title": "Sačuvaj čist Discord",
-        "copy": "Pravi direktorijum aplikacije ostaje ažuriran bajt po bajt, tako da izvorni updater može da radi."
-      },
-      "twin": {
-        "title": "Napravi hardlink blizanca",
-        "copy": "QuiTwin pravi nepromenljivo okruženje iz NTFS hardlinkova bez dupliranja cele Discord instalacije."
-      },
-      "equicord": {
-        "title": "Učitaj Equicord tamo",
-        "copy": "Equicord radi u blizancu, dok Discord i dalje vidi originalne putanje izvršne datoteke i resursa."
-      },
-      "rebuild": {
-        "title": "Ponovo izgradi posle ažuriranja",
-        "copy": "Kada Discord promeni host, sledeće pokretanje vraća čisto stanje i pravi novog modovanog blizanca."
-      }
-    }
-  },
-  "safeguards": {
-    "title": "Napravljeno za nezgodno ažuriranje, ne za savršen demo.",
-    "items": {
-      "process": {
-        "title": "Bez stalnog procesa",
-        "copy": "QuiTwin pripremi okruženje, pokrene Discord i izađe. Ništa ne čeka u sistemskoj traci niti radi kao servis."
-      },
-      "atomic": {
-        "title": "Atomsko objavljivanje",
-        "copy": "Preuzimanja i generacije okruženja se pripreme, upišu na disk i objave atomski."
-      },
-      "native": {
-        "title": "Izvorna ažuriranja ostaju izvorna",
-        "copy": "Discord zadržava sopstveni updater i čist host. QuiTwin ne pravi novu verziju Squirrel-a i ne zamrzava klijent."
-      },
-      "cleanup": {
-        "title": "Jedna datoteka ulazi, ništa ne ostaje",
-        "copy": "Prenosivi instalater predaje posao instaliranom pokretaču, zatvara se i briše pre zvuka uspeha."
-      }
-    }
-  },
-  "proof": {
-    "title": "Namerno smo izazvali kvar.",
-    "copy": "Pravi Discord host je veštački zastareo i ažuriran izvornim updaterom. Delta nije uspela, puna zamena se završila, Equicord je preživeo direktno ponovno pokretanje, a sledeće obično pokretanje vratilo je čist host.",
-    "host": "Ažuriranje Discord hosta",
-    "completed": "završeno",
-    "restart": "Direktno ponovno pokretanje",
-    "survived": "preživelo",
-    "portable": "Prenosivi pokretač",
-    "deleted": "obrisan",
-    "resident": "Stalni QuiTwin proces",
-    "none": "nema"
-  },
-  "install": {
-    "lineOne": "Preuzmi.",
-    "lineTwo": "Pokreni jednom.",
-    "lineThree": "Gotovo.",
-    "copy": "QuiTwin pronalazi Discord bilo gde ili instalira Stable ako nedostaje. Instalira Equicord, pokreće Discord, briše prenosivi EXE i sklanja se.",
-    "button": "Preuzmi QuiTwin.exe",
-    "latest": "Najnovije izdanje",
-    "risk": "Discord ne podržava izmene klijenta i one mogu kršiti Uslove korišćenja. Koristi ih na sopstveni rizik."
-  },
-  "footer": {
-    "by": "QuiTwin autora ArieX",
-    "releases": "Beleške izdanja",
-    "license": "MIT licenca",
-    "independent": "Nezavisan od projekata Discord, Equicord, Vencord i Squirrel."
+    "github": "GitHub",
+    "after": "Pokreni ga jednom. Instalater se sam briše kada se instalacija uspešno završi."
   }
 }

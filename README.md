@@ -1,138 +1,53 @@
 <p align="center">
-  <strong>EN</strong> |
-  <a href="docs/README.ru.md">RU</a> |
-  <a href="docs/README.sr.md">SR</a> |
-  <a href="docs/README.pl.md">PL</a> |
-  <a href="docs/README.tr.md">TR</a> |
-  <a href="docs/README.fr.md">FR</a> |
-  <a href="docs/README.ar.md">AR</a> |
+  <img src="site/public/icon.png" width="112" alt="QuiTwin">
+</p>
+
+<h1 align="center">QuiTwin</h1>
+
+<p align="center">
+  Keep Equicord installed through Discord updates.
+</p>
+
+<p align="center">
+  <a href="README.md">EN</a> ·
+  <a href="docs/README.ru.md">RU</a> ·
+  <a href="docs/README.sr.md">SR</a> ·
+  <a href="docs/README.pl.md">PL</a> ·
+  <a href="docs/README.tr.md">TR</a> ·
+  <a href="docs/README.fr.md">FR</a> ·
+  <a href="docs/README.ar.md">AR</a> ·
   <a href="docs/README.zh.md">ZH</a>
 </p>
 
 <p align="center">
-  <img src="assets/icon.png" width="160" alt="QuiTwin icon">
+  <a href="https://github.com/AriesAlex/QuiTwin/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/AriesAlex/QuiTwin/ci.yml?branch=main&style=flat-square&label=CI"></a>
+  <a href="https://github.com/AriesAlex/QuiTwin/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/AriesAlex/QuiTwin?style=flat-square"></a>
+  <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/github/license/AriesAlex/QuiTwin?style=flat-square"></a>
 </p>
-
-# QuiTwin
-
-**A one-click, update-resistant Equicord launcher for Discord on Windows.**
-
-[Website](https://ariesalex.github.io/QuiTwin/) · [How it works](#why-discord-updates-remove-client-mods)
-
-[![CI](https://github.com/AriesAlex/QuiTwin/actions/workflows/ci.yml/badge.svg)](https://github.com/AriesAlex/QuiTwin/actions/workflows/ci.yml)
-[![Latest release](https://img.shields.io/github/v/release/AriesAlex/QuiTwin)](https://github.com/AriesAlex/QuiTwin/releases/latest)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 <p align="center">
-  <a href="https://github.com/AriesAlex/QuiTwin/releases/latest/download/QuiTwin.exe"><img src="https://img.shields.io/badge/Download-QuiTwin.exe-5865F2?style=for-the-badge&logo=windows11&logoColor=white" alt="Download QuiTwin.exe"></a>
+  <a href="https://github.com/AriesAlex/QuiTwin/releases/latest/download/QuiTwin.exe">
+    <img alt="Download QuiTwin.exe" src="https://img.shields.io/badge/DOWNLOAD-QuiTwin.exe-5865F2?style=for-the-badge">
+  </a>
 </p>
+
 <p align="center"><strong>Download. Run once. Done.</strong></p>
 
-If Vencord or Equicord keeps disappearing after Discord updates, QuiTwin is built to solve that exact problem—without a background service, scheduled task, DLL injection, or repeatedly patching Discord's live `app.asar`.
+QuiTwin finds Discord or installs it when missing, installs Equicord, and replaces Discord's launcher with an update-safe twin. Discord keeps using its native updater, while Equicord survives the next update. No service, scheduled task, or resident watcher is added.
 
-> [!IMPORTANT]
-> Discord client modifications are unsupported by Discord and may violate its Terms of Service. Use QuiTwin and Equicord at your own risk.
+After a successful setup, the downloaded installer removes itself and starts Discord.
 
-## Download and install
+> QuiTwin is an independent project and is not affiliated with Discord, Vencord, or Equicord. Client modifications may violate Discord's terms of service. Use it at your own risk.
 
-1. [Download **`QuiTwin.exe`**](https://github.com/AriesAlex/QuiTwin/releases/latest/download/QuiTwin.exe).
-2. Run it once.
-3. Done. The downloaded EXE removes itself; start Discord normally from its existing shortcut.
+## Uninstall
 
-QuiTwin automatically:
+Uninstall Discord from Windows Settings as usual. QuiTwin restores the stock updater before handing control to Discord's uninstaller.
 
-- finds Stable, PTB, or Canary even when it is not on `C:`;
-- downloads and Authenticode-verifies the official x64 Discord installer if Discord is missing;
-- downloads the latest official Equicord `desktop.asar`;
-- installs itself as Discord's normal `Update.exe` launch entrypoint;
-- starts Discord through an update-safe hardlink runtime;
-- plays the Windows proximity notification sound when installation succeeds;
-- waits for the portable installer process to exit, then removes the downloaded EXE.
-
-Windows may show a SmartScreen warning because community release binaries are not code-signed. Every release is built by the public GitHub Actions workflow, or you can build it yourself.
-
-## Why Discord updates remove client mods
-
-Traditional Vencord and Equicord installers replace or wrap:
-
-```text
-Discord/app-X.Y.Z/resources/app.asar
-```
-
-Discord's current native updater lives in `updater.node`. It downloads a new `app-X.Y.Z`, validates file hashes, commits it in `installer.db`, and may restart the new `Discord.exe` directly. A root `Update.exe` wrapper alone cannot intercept that direct restart, while a modified live `app.asar` can also make delta updates fail.
-
-QuiTwin combines two mechanisms:
-
-```mermaid
-flowchart LR
-    S["Discord shortcut"] --> Q["QuiTwin as Update.exe"]
-    Q --> N["Real stock app-X.Y.Z"]
-    N --> H["Hardlink shadow runtime"]
-    H --> E["Equicord + stock Discord ASAR"]
-    E --> U["Discord updater sees the real stock paths"]
-    U --> R["New real host"]
-    R --> P["Equicord preserves itself for direct restart"]
-    P --> Q
-```
-
-1. **Stock host:** the real Discord installation remains byte-for-byte updateable.
-2. **Hardlink shadow:** QuiTwin creates a content-addressed runtime under `.quitwin/runtime`. It costs almost no extra disk space because the Discord files are NTFS hardlinks.
-3. **Path virtualization:** a tiny JavaScript loader tells Discord's native updater to use the real executable and resources paths, while Equicord loads the shadow's stock ASAR.
-4. **Direct restart protection:** Equicord's current host-update hook patches a freshly committed host before Discord's direct post-update restart.
-5. **Next normal launch:** QuiTwin restores that host to stock and creates the next shadow generation.
-
-There is no always-running QuiTwin process. `Update.exe` prepares the runtime, starts Discord, and exits.
-
-## Reliability model
-
-- `Update.exe` is replaced atomically with write-through semantics.
-- Downloads are staged, length-checked, format-checked, flushed, and atomically published.
-- Runtime builds use disposable `.building-*` directories and an atomic directory rename.
-- Published runtimes are immutable generations; an in-use generation is never rewritten.
-- The real Discord `app.asar` is never moved into an external cache.
-- A successful Equicord load writes `.quitwin/last-launch.json` for diagnostics.
-- Discord's original uninstaller is not required. QuiTwin handles Windows Settings uninstall with the same single binary.
-
-A power loss can leave an unused staging directory, but not a half-written live Discord host or launcher.
-
-## Updates and uninstall
-
-Discord and Equicord continue to update normally. Running a newer `QuiTwin.exe` upgrades the installed launcher.
-
-To remove Discord and QuiTwin, use:
-
-**Windows Settings → Apps → Installed apps → Discord → Uninstall**
-
-QuiTwin deliberately leaves Discord user data and Equicord settings in `%APPDATA%`, matching normal Discord uninstall expectations.
-
-## Supported systems
-
-- Windows 10 or 11
-- x64 Discord Stable, PTB, or Canary
-- NTFS (hardlinks are required)
-
-Running QuiTwin on a machine without Discord installs Stable x64. When several channels are installed, QuiTwin prefers Stable, then PTB, then Canary.
-
-## Build from source
-
-Requirements:
-
-- Rust stable with the `x86_64-pc-windows-msvc` target
-- Visual Studio Build Tools / MSVC linker
+## Build
 
 ```powershell
-cargo test --all-targets
-cargo build --locked --release
+cargo test --all-targets --locked
+cargo build --release --locked
 ```
 
-The binary is written to `target\release\quitwin.exe`.
-
-## Project scope
-
-QuiTwin currently installs Equicord, an extended Vencord fork. The architecture is client-mod agnostic, but Vencord is not yet offered as a selectable payload.
-
-QuiTwin is independent from Discord, Equicord, Vencord, and Squirrel. Thanks to those projects for making their source available.
-
-## License
-
-[MIT](LICENSE)
+The binary is written to `target/release/quitwin.exe`.
