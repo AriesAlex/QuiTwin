@@ -315,9 +315,6 @@ fn launch(install: &Install, args: &[OsString], wait: bool) -> Result<()> {
     command
         .args(args)
         .current_dir(&runtime)
-        .env("QUITWIN_REAL_EXE", &host.executable)
-        .env("QUITWIN_REAL_RESOURCES", &host.resources)
-        .env("QUITWIN_STATE_DIRECTORY", install.root.join(".quitwin"))
         .stdin(Stdio::null())
         .stdout(Stdio::null())
         .stderr(Stdio::null());

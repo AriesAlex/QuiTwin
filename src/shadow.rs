@@ -12,9 +12,9 @@ use walkdir::WalkDir;
 
 use crate::{discord::Host, logging};
 
-const SCHEMA: u32 = 3;
+const SCHEMA: u32 = 4;
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, PartialEq, Serialize)]
 struct Marker {
     schema: u32,
     version: String,
@@ -114,11 +114,11 @@ fn build(host: &Host, equicord_asar: &Path, destination: &Path, marker: &Marker)
         .context("hardlink stock app.asar into shadow runtime")?;
     fs::write(
         resources.join("app").join("package.json"),
-        r#"{"name":"quitwin-loader","main":"index.js"}"#,
+        r#"{"name":"discord","main":"index.js"}"#,
     )?;
     fs::write(
         resources.join("app").join("index.js"),
-        loader_script(equicord_asar)?,
+        loader_script(&marker.version, equicord_asar)?,
     )?;
 
     let marker_path = destination.join(".quitwin.json");
@@ -136,7 +136,8 @@ fn build(host: &Host, equicord_asar: &Path, destination: &Path, marker: &Marker)
     Ok(linked + 1)
 }
 
-fn loader_script(equicord_asar: &Path) -> Result<String> {
+fn loader_script(version: &str, equicord_asar: &Path) -> Result<String> {
+    let version = serde_json::to_string(version)?;
     let equicord = serde_json::to_string(&equicord_asar.to_string_lossy())?;
     Ok(format!(
         r#""use strict";
@@ -144,19 +145,19 @@ const fs = require("node:fs");
 const path = require("node:path");
 const {{ app }} = require("electron");
 
-const realExe = process.env.QUITWIN_REAL_EXE;
-const realResources = process.env.QUITWIN_REAL_RESOURCES;
-const stateDirectory = process.env.QUITWIN_STATE_DIRECTORY;
-if (!realExe || !realResources || !stateDirectory) throw new Error("QuiTwin launch context is missing");
+const version = {version};
+const runtimeDirectory = path.resolve(__dirname, "..", "..");
+const stateDirectory = path.resolve(runtimeDirectory, "..", "..");
+const realDirectory = path.join(path.dirname(stateDirectory), `app-${{version}}`);
+const realExe = path.join(realDirectory, path.basename(process.execPath));
+const realResources = path.join(realDirectory, "resources");
+if (!fs.existsSync(realExe) || !fs.existsSync(realResources)) throw new Error("QuiTwin stock host is missing");
 
 const originalGetPath = app.getPath.bind(app);
 app.getPath = name => name === "exe" ? realExe : originalGetPath(name);
 Object.defineProperty(process, "execPath", {{ configurable: true, value: realExe }});
 Object.defineProperty(process, "resourcesPath", {{ configurable: true, value: realResources }});
 
-delete process.env.QUITWIN_REAL_EXE;
-delete process.env.QUITWIN_REAL_RESOURCES;
-delete process.env.QUITWIN_STATE_DIRECTORY;
 require({equicord});
 
 const proof = {{
@@ -179,11 +180,7 @@ fn valid_cache(directory: &Path, expected: &Marker) -> bool {
         .ok()
         .and_then(|bytes| serde_json::from_slice::<Marker>(&bytes).ok());
     marker.is_some_and(|actual| {
-        actual.schema == expected.schema
-            && actual.version == expected.version
-            && actual.stock_asar_sha256 == expected.stock_asar_sha256
-            && actual.host_tree_fingerprint == expected.host_tree_fingerprint
-            && actual.equicord_path == expected.equicord_path
+        actual == *expected
             && directory.join("resources/app/index.js").is_file()
             && directory.join("resources/_app.asar").is_file()
     })
@@ -289,6 +286,15 @@ mod tests {
         };
 
         let first = prepare(&host, &equicord).unwrap();
+        assert_eq!(
+            fs::read_to_string(first.join("resources/app/package.json")).unwrap(),
+            r#"{"name":"discord","main":"index.js"}"#
+        );
+        let first_loader = fs::read_to_string(first.join("resources/app/index.js")).unwrap();
+        assert!(first_loader.contains(r#"const version = "1.2.3";"#));
+        assert!(first_loader.contains("path.resolve(__dirname, \"..\", \"..\")"));
+        assert!(!first_loader.contains("process.env.QUITWIN"));
+
         let shadow_module = first.join("modules").join("module.node");
         fs::write(&module, b"after!").unwrap();
         assert_eq!(fs::read(&shadow_module).unwrap(), b"after!");
