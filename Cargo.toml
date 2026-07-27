@@ -1,6 +1,6 @@
 [package]
 name = "quitwin"
-version = "0.1.5"
+version = "0.1.6"
 edition = "2024"
 description = "Update-resistant Equicord launcher for Discord on Windows"
 authors = ["ArieX"]

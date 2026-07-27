@@ -2,7 +2,6 @@ use std::{
     fs::{self, File},
     io::Write,
     path::{Path, PathBuf},
-    time::UNIX_EPOCH,
 };
 
 use anyhow::{Context, Result, bail};
@@ -10,9 +9,9 @@ use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use walkdir::WalkDir;
 
-use crate::{discord::Host, logging};
+use crate::{discord::Host, logging, platform};
 
-const SCHEMA: u32 = 4;
+const SCHEMA: u32 = 5;
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
 struct Marker {
@@ -204,17 +203,11 @@ fn host_tree_fingerprint(host: &Host) -> Result<String> {
         {
             continue;
         }
-        let metadata = entry.metadata()?;
-        let modified = metadata
-            .modified()
-            .ok()
-            .and_then(|time| time.duration_since(UNIX_EPOCH).ok())
-            .map(|duration| duration.as_nanos())
-            .unwrap_or_default();
+        let (volume, file_index) = platform::file_identity(entry.path())?;
         hasher.update(relative.to_string_lossy().replace('\\', "/").as_bytes());
         hasher.update([0]);
-        hasher.update(metadata.len().to_le_bytes());
-        hasher.update(modified.to_le_bytes());
+        hasher.update(volume.to_le_bytes());
+        hasher.update(file_index.to_le_bytes());
     }
     Ok(hex::encode(hasher.finalize()))
 }
@@ -259,7 +252,7 @@ mod tests {
     use crate::discord::{Channel, Install};
 
     #[test]
-    fn shadow_uses_hardlinks_and_rotates_when_host_changes() {
+    fn shadow_reuses_in_place_changes_and_rotates_replaced_files() {
         let temporary = TempDir::new().unwrap();
         let root = temporary.path().join("Discord");
         let host_directory = root.join("app-1.2.3");
@@ -300,10 +293,16 @@ mod tests {
         assert_eq!(fs::read(&shadow_module).unwrap(), b"after!");
 
         let second = prepare(&host, &equicord).unwrap();
-        assert_ne!(first, second);
+        assert_eq!(first, second);
+
+        fs::remove_file(&module).unwrap();
+        fs::write(&module, b"replacement").unwrap();
+        let third = prepare(&host, &equicord).unwrap();
+
+        assert_ne!(second, third);
         assert_eq!(
-            fs::read(second.join("modules/module.node")).unwrap(),
-            b"after!"
+            fs::read(third.join("modules/module.node")).unwrap(),
+            b"replacement"
         );
     }
 }

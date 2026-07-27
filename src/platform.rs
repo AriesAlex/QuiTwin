@@ -22,8 +22,10 @@ use windows::{
             WTD_REVOKE_NONE, WTD_STATEACTION_IGNORE, WTD_UI_NONE, WinVerifyTrust,
         },
         Storage::FileSystem::{
+            BY_HANDLE_FILE_INFORMATION, CreateFileW, FILE_ATTRIBUTE_NORMAL, FILE_READ_ATTRIBUTES,
+            FILE_SHARE_DELETE, FILE_SHARE_READ, FILE_SHARE_WRITE, GetFileInformationByHandle,
             MOVEFILE_DELAY_UNTIL_REBOOT, MOVEFILE_REPLACE_EXISTING, MOVEFILE_WRITE_THROUGH,
-            MoveFileExW, REPLACEFILE_WRITE_THROUGH, ReplaceFileW,
+            MoveFileExW, OPEN_EXISTING, REPLACEFILE_WRITE_THROUGH, ReplaceFileW,
         },
         System::Threading::{
             CreateMutexW, INFINITE, OpenProcess, PROCESS_SYNCHRONIZE, ReleaseMutex,
@@ -60,6 +62,31 @@ pub fn same_path(left: &Path, right: &Path) -> bool {
             .to_lowercase()
     };
     normalize(left) == normalize(right)
+}
+
+pub fn file_identity(path: &Path) -> Result<(u32, u64)> {
+    let path_wide = wide(path.as_os_str());
+    let handle = unsafe {
+        CreateFileW(
+            PCWSTR(path_wide.as_ptr()),
+            FILE_READ_ATTRIBUTES.0,
+            FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+            None,
+            OPEN_EXISTING,
+            FILE_ATTRIBUTE_NORMAL,
+            None,
+        )
+    }
+    .with_context(|| format!("open {} for file identity", path.display()))?;
+    let mut information = BY_HANDLE_FILE_INFORMATION::default();
+    let result = unsafe { GetFileInformationByHandle(handle, &mut information) };
+    unsafe {
+        let _ = CloseHandle(handle);
+    }
+    result.with_context(|| format!("read file identity for {}", path.display()))?;
+
+    let index = ((information.nFileIndexHigh as u64) << 32) | information.nFileIndexLow as u64;
+    Ok((information.dwVolumeSerialNumber, index))
 }
 
 pub fn run_hidden(program: &Path, args: &[OsString], wait: bool) -> Result<Option<ExitStatus>> {
