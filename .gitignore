@@ -1,4 +1,8 @@
 /target/
+/site/.nuxt/
+/site/.output/
+/site/dist/
+/site/node_modules/
 *.log
 *.tmp
 *.old

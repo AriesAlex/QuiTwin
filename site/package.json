@@ -1,0 +1,30 @@
+{
+  "name": "quitwin-site",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20.19.0",
+    "pnpm": ">=10.28.2"
+  },
+  "scripts": {
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "postinstall": "nuxt prepare",
+    "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck",
+    "verify:output": "node scripts/verify-output.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/space-grotesk": "5.3.0",
+    "nuxt": "3.21.9",
+    "vue": "3.5.40",
+    "vue-router": "4.6.4"
+  },
+  "devDependencies": {
+    "@nuxtjs/i18n": "10.5.0",
+    "@types/node": "24.13.3",
+    "typescript": "5.9.3",
+    "vue-tsc": "3.3.8"
+  },
+  "packageManager": "pnpm@10.28.2"
+}

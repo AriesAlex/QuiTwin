@@ -15,6 +15,7 @@ use anyhow::{Context, Result, bail};
 use windows::{
     Win32::{
         Foundation::{CloseHandle, ERROR_ALREADY_EXISTS, GetLastError, HANDLE, HLOCAL, LocalFree},
+        Media::Audio::{PlaySoundW, SND_FILENAME, SND_MEMORY, SND_NODEFAULT},
         Security::WinTrust::{
             WINTRUST_ACTION_GENERIC_VERIFY_V2, WINTRUST_DATA, WINTRUST_DATA_0, WINTRUST_FILE_INFO,
             WTD_CACHE_ONLY_URL_RETRIEVAL, WTD_CHOICE_FILE, WTD_REVOCATION_CHECK_NONE,
@@ -242,24 +243,63 @@ pub fn verify_authenticode(path: &Path) -> Result<()> {
     }
 }
 
-pub fn wait_for_process(process_id: u32) {
-    let Ok(handle) = (unsafe { OpenProcess(PROCESS_SYNCHRONIZE, false, process_id) }) else {
-        return;
-    };
+pub fn play_sound_file(path: &Path) -> bool {
+    let path = wide(path.as_os_str());
+    unsafe { PlaySoundW(PCWSTR(path.as_ptr()), None, SND_FILENAME | SND_NODEFAULT).as_bool() }
+}
+
+pub fn play_sound_memory(sound: &[u8]) -> bool {
     unsafe {
-        WaitForSingleObject(handle, 30_000);
-        let _ = CloseHandle(handle);
+        PlaySoundW(
+            PCWSTR(sound.as_ptr().cast()),
+            None,
+            SND_MEMORY | SND_NODEFAULT,
+        )
+        .as_bool()
     }
 }
 
-pub fn delete_after_reboot(path: &Path) {
+pub struct ProcessWaitHandle(HANDLE);
+
+impl ProcessWaitHandle {
+    pub fn open(process_id: u32) -> Option<Self> {
+        unsafe { OpenProcess(PROCESS_SYNCHRONIZE, false, process_id) }
+            .ok()
+            .map(Self)
+    }
+
+    pub fn wait(&self) {
+        unsafe {
+            WaitForSingleObject(self.0, INFINITE);
+        }
+    }
+}
+
+impl Drop for ProcessWaitHandle {
+    fn drop(&mut self) {
+        unsafe {
+            let _ = CloseHandle(self.0);
+        }
+    }
+}
+
+pub fn wait_for_process(process_id: u32) {
+    if let Some(process) = ProcessWaitHandle::open(process_id) {
+        unsafe {
+            WaitForSingleObject(process.0, 30_000);
+        }
+    }
+}
+
+pub fn delete_after_reboot(path: &Path) -> bool {
     let path = wide(path.as_os_str());
     unsafe {
-        let _ = MoveFileExW(
+        MoveFileExW(
             PCWSTR(path.as_ptr()),
             PCWSTR::null(),
             MOVEFILE_DELAY_UNTIL_REBOOT,
-        );
+        )
+        .is_ok()
     }
 }
 

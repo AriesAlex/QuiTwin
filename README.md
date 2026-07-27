@@ -1,10 +1,23 @@
 <p align="center">
+  <strong>EN</strong> |
+  <a href="docs/README.ru.md">RU</a> |
+  <a href="docs/README.sr.md">SR</a> |
+  <a href="docs/README.pl.md">PL</a> |
+  <a href="docs/README.tr.md">TR</a> |
+  <a href="docs/README.fr.md">FR</a> |
+  <a href="docs/README.ar.md">AR</a> |
+  <a href="docs/README.zh.md">ZH</a>
+</p>
+
+<p align="center">
   <img src="assets/icon.png" width="160" alt="QuiTwin icon">
 </p>
 
 # QuiTwin
 
 **A one-click, update-resistant Equicord launcher for Discord on Windows.**
+
+[Website](https://ariesalex.github.io/QuiTwin/) · [How it works](#why-discord-updates-remove-client-mods)
 
 [![CI](https://github.com/AriesAlex/QuiTwin/actions/workflows/ci.yml/badge.svg)](https://github.com/AriesAlex/QuiTwin/actions/workflows/ci.yml)
 [![Latest release](https://img.shields.io/github/v/release/AriesAlex/QuiTwin)](https://github.com/AriesAlex/QuiTwin/releases/latest)
@@ -24,7 +37,7 @@ If Vencord or Equicord keeps disappearing after Discord updates, QuiTwin is buil
 
 1. [Download **`QuiTwin.exe`**](https://github.com/AriesAlex/QuiTwin/releases/latest/download/QuiTwin.exe).
 2. Run it once.
-3. Done. Start Discord normally from its existing shortcut.
+3. Done. The downloaded EXE removes itself; start Discord normally from its existing shortcut.
 
 QuiTwin automatically:
 
@@ -32,7 +45,9 @@ QuiTwin automatically:
 - downloads and Authenticode-verifies the official x64 Discord installer if Discord is missing;
 - downloads the latest official Equicord `desktop.asar`;
 - installs itself as Discord's normal `Update.exe` launch entrypoint;
-- starts Discord through an update-safe hardlink runtime.
+- starts Discord through an update-safe hardlink runtime;
+- plays the Windows proximity notification sound when installation succeeds;
+- waits for the portable installer process to exit, then removes the downloaded EXE.
 
 Windows may show a SmartScreen warning because community release binaries are not code-signed. Every release is built by the public GitHub Actions workflow, or you can build it yourself.
 

@@ -1,3 +1,5 @@
+use std::{env, path::PathBuf};
+
 use windows::{
     Win32::{
         System::Com::{
@@ -20,6 +22,16 @@ pub fn show_error(message: &str) {
 
 pub fn show_success(message: &str) {
     platform::message("QuiTwin", message, false);
+}
+
+pub fn play_success_sound() -> bool {
+    let system_sound = env::var_os("WINDIR").map(PathBuf::from).map(|windows| {
+        windows
+            .join("Media")
+            .join("Windows Proximity Notification.wav")
+    });
+    system_sound.is_some_and(|sound| platform::play_sound_file(&sound))
+        || platform::play_sound_memory(include_bytes!("../assets/success.wav"))
 }
 
 pub struct Progress {

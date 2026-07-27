@@ -1,0 +1,118 @@
+{
+  "meta": {
+    "title": "QuiTwin - Equicord odporny na aktualizacje Discorda",
+    "description": "Vencord lub Equicord znika po aktualizacji Discorda? QuiTwin jednym uruchomieniem instaluje odporny na aktualizacje launcher Equicord dla Windows.",
+    "ogAlt": "QuiTwin zachowuje Equicord po aktualizacjach Discorda"
+  },
+  "a11y": {
+    "skip": "Przejdź do treści",
+    "primaryNav": "Główna nawigacja",
+    "home": "Strona główna QuiTwin",
+    "productFacts": "Informacje o QuiTwin",
+    "logoAlt": "Znak QuiTwin z przeplatającymi się literami Q w fiolecie i cyjanie",
+    "status": "Status projektu",
+    "verified": "Zweryfikowane zachowania QuiTwin"
+  },
+  "nav": {
+    "how": "Jak to działa",
+    "source": "Kod źródłowy",
+    "language": "Wybierz język",
+    "download": "Pobierz"
+  },
+  "hero": {
+    "titleFirst": "Discord się aktualizuje.",
+    "titleSecond": "Equicord zostaje.",
+    "lede": "QuiTwin instaluje Discorda, Equicord i launcher odporny na aktualizacje. Bez usługi, harmonogramu i ciągłego patchowania.",
+    "download": "Pobierz QuiTwin.exe",
+    "platform": "Windows x64",
+    "mechanism": "Zobacz mechanizm",
+    "fineprint": "Uruchom raz. Pobrany EXE usunie się po udanej instalacji.",
+    "brandLineOne": "Bliźniacze środowisko",
+    "brandLineTwo": "dla czystego hosta",
+    "statExe": "przenośny EXE",
+    "statServices": "usług w tle",
+    "statRuntime": "środowisko hardlink"
+  },
+  "trust": {
+    "license": "Licencja MIT",
+    "source": "Publiczny kod",
+    "channels": "Stable, PTB, Canary",
+    "windows": "Windows 10 i 11"
+  },
+  "problem": {
+    "title": "Dlaczego mod ciągle znika?",
+    "copyOne": "Tradycyjne instalatory Vencord i Equicord patchują aktywny host Discorda. Aktualizacja zastępuje go nową czystą wersją, więc patch znika.",
+    "copyTwo": "Ponowna instalacja działa do następnej aktualizacji. Blokowanie aktualizacji działa, dopóki Discord nie odmówi startu. QuiTwin zmienia zamiast tego granicę uruchamiania."
+  },
+  "mechanism": {
+    "titleFirst": "Host pozostaje czysty.",
+    "titleSecond": "Mod działa w bliźniaku.",
+    "intro": "Discord aktualizuje instalację, którą zna. Equicord działa z cienia adresowanego zawartością, zbudowanego z tych samych plików.",
+    "steps": {
+      "stock": {
+        "title": "Zachowaj czystego Discorda",
+        "copy": "Prawdziwy katalog aplikacji pozostaje aktualizowalny bajt w bajt, więc natywny updater może działać."
+      },
+      "twin": {
+        "title": "Zbuduj bliźniaka z hardlinków",
+        "copy": "QuiTwin tworzy niezmienne środowisko z hardlinków NTFS bez kopiowania całej instalacji Discorda."
+      },
+      "equicord": {
+        "title": "Załaduj tam Equicord",
+        "copy": "Equicord działa w bliźniaku, a Discord nadal widzi oryginalne ścieżki pliku wykonywalnego i zasobów."
+      },
+      "rebuild": {
+        "title": "Przebuduj po aktualizacji",
+        "copy": "Gdy Discord zmieni host, następne uruchomienie przywróci czysty stan i utworzy nowego zmodowanego bliźniaka."
+      }
+    }
+  },
+  "safeguards": {
+    "title": "Zbudowany pod trudną aktualizację, nie pod idealne demo.",
+    "items": {
+      "process": {
+        "title": "Bez stałego procesu",
+        "copy": "QuiTwin przygotowuje środowisko, uruchamia Discorda i kończy pracę. Nic nie czeka w zasobniku ani nie działa jako usługa."
+      },
+      "atomic": {
+        "title": "Publikacja atomowa",
+        "copy": "Pobrania i generacje środowiska są przygotowywane, zapisywane na dysk i publikowane atomowo."
+      },
+      "native": {
+        "title": "Natywne aktualizacje pozostają natywne",
+        "copy": "Discord zachowuje własny updater i czysty host. QuiTwin nie odtwarza Squirrela i nie zamraża klienta."
+      },
+      "cleanup": {
+        "title": "Jeden plik na wejściu, zero resztek",
+        "copy": "Przenośny instalator przekazuje sterowanie zainstalowanemu launcherowi, zamyka się i jest usuwany przed dźwiękiem sukcesu."
+      }
+    }
+  },
+  "proof": {
+    "title": "Wymusiliśmy przypadek awarii.",
+    "copy": "Prawdziwy host Discorda został celowo postarzony i zaktualizowany natywnym updaterem. Delta zawiodła, pełna aktualizacja się zakończyła, Equicord przetrwał bezpośredni restart, a następny zwykły start przywrócił czysty host.",
+    "host": "Aktualizacja hosta Discorda",
+    "completed": "ukończona",
+    "restart": "Bezpośredni restart Equicord",
+    "survived": "przetrwany",
+    "portable": "Przenośny launcher",
+    "deleted": "usunięty",
+    "resident": "Stały proces QuiTwin",
+    "none": "brak"
+  },
+  "install": {
+    "lineOne": "Pobierz.",
+    "lineTwo": "Uruchom raz.",
+    "lineThree": "Gotowe.",
+    "copy": "QuiTwin znajdzie Discorda w dowolnym miejscu lub zainstaluje Stable, jeśli go brakuje. Zainstaluje Equicord, uruchomi Discorda, usunie przenośny EXE i zejdzie z drogi.",
+    "button": "Pobierz QuiTwin.exe",
+    "latest": "Najnowsze wydanie",
+    "risk": "Modyfikacje klienta nie są wspierane przez Discorda i mogą naruszać jego Warunki korzystania. Używasz ich na własne ryzyko."
+  },
+  "footer": {
+    "by": "QuiTwin autorstwa ArieX",
+    "releases": "Informacje o wydaniach",
+    "license": "Licencja MIT",
+    "independent": "Projekt niezależny od Discorda, Equicord, Vencord i Squirrel."
+  }
+}

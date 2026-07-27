@@ -1,6 +1,6 @@
 [package]
 name = "quitwin"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2024"
 description = "Update-resistant Equicord launcher for Discord on Windows"
 authors = ["ArieX"]
@@ -19,6 +19,7 @@ sha2 = "0.10"
 walkdir = "2.5"
 windows = { version = "0.62", features = [
     "Win32_Foundation",
+    "Win32_Media_Audio",
     "Win32_Security_Cryptography",
     "Win32_Security_WinTrust",
     "Win32_Storage_FileSystem",

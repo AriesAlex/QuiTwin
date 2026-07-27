@@ -1,0 +1,118 @@
+{
+  "meta": {
+    "title": "QuiTwin - Discord güncellemelerine dayanan Equicord",
+    "description": "Vencord veya Equicord Discord güncellemelerinden sonra kayboluyor mu? QuiTwin, Windows için güncellemeye dayanıklı Equicord başlatıcısını tek çalıştırmada kurar.",
+    "ogAlt": "QuiTwin, Discord güncellemelerinde Equicord kurulumunu korur"
+  },
+  "a11y": {
+    "skip": "İçeriğe geç",
+    "primaryNav": "Ana gezinme",
+    "home": "QuiTwin ana sayfası",
+    "productFacts": "QuiTwin ürün bilgileri",
+    "logoAlt": "Mor ve camgöbeği iç içe Q harflerinden oluşan QuiTwin işareti",
+    "status": "Proje durumu",
+    "verified": "Doğrulanmış QuiTwin davranışları"
+  },
+  "nav": {
+    "how": "Nasıl çalışır",
+    "source": "Kaynak kod",
+    "language": "Dil seç",
+    "download": "İndir"
+  },
+  "hero": {
+    "titleFirst": "Discord güncellenir.",
+    "titleSecond": "Equicord kalır.",
+    "lede": "QuiTwin Discord, Equicord ve güncellemeye dayanıklı bir başlatıcı kurar. Servis, zamanlanmış görev ve sürekli yama yok.",
+    "download": "QuiTwin.exe indir",
+    "platform": "Windows x64",
+    "mechanism": "Mekanizmayı gör",
+    "fineprint": "Bir kez çalıştırın. İndirilen EXE başarılı kurulumdan sonra kendini siler.",
+    "brandLineOne": "İkiz çalışma ortamı",
+    "brandLineTwo": "tek temiz ana makine",
+    "statExe": "taşınabilir EXE",
+    "statServices": "arka plan servisi",
+    "statRuntime": "hardlink ortamı"
+  },
+  "trust": {
+    "license": "MIT lisanslı",
+    "source": "Herkese açık kaynak",
+    "channels": "Stable, PTB, Canary",
+    "windows": "Windows 10 ve 11"
+  },
+  "problem": {
+    "title": "Mod neden sürekli kayboluyor?",
+    "copyOne": "Geleneksel Vencord ve Equicord kurucuları çalışan Discord ana makinesini yamalar. Discord güncellemesi bunu yeni ve temiz bir sürümle değiştirince yama kaybolur.",
+    "copyTwo": "Yeniden kurmak bir sonraki güncellemeye kadar işe yarar. Güncellemeyi engellemek Discord açılmayı reddedene kadar işe yarar. QuiTwin bunun yerine başlatma sınırını değiştirir."
+  },
+  "mechanism": {
+    "titleFirst": "Ana makine temiz kalsın.",
+    "titleSecond": "İkizini modla.",
+    "intro": "Discord bildiği kurulumu günceller. Equicord aynı dosyalardan oluşturulan, içeriğe göre adreslenen gölge ortamda çalışır.",
+    "steps": {
+      "stock": {
+        "title": "Discord'u temiz tut",
+        "copy": "Gerçek uygulama dizini bayt bayt güncellenebilir kalır, böylece yerel güncelleyici işini yapabilir."
+      },
+      "twin": {
+        "title": "Hardlink ikizi oluştur",
+        "copy": "QuiTwin tüm Discord kurulumunu kopyalamadan NTFS hardlinkleriyle değişmez bir gölge ortam oluşturur."
+      },
+      "equicord": {
+        "title": "Equicord'u orada yükle",
+        "copy": "Equicord ikizde çalışırken Discord özgün yürütülebilir dosya ve kaynak yollarını görmeye devam eder."
+      },
+      "rebuild": {
+        "title": "Güncellemeden sonra yeniden oluştur",
+        "copy": "Discord ana makineyi değiştirdiğinde sonraki açılış temiz durumu geri getirir ve yeni modlu bir ikiz oluşturur."
+      }
+    }
+  },
+  "safeguards": {
+    "title": "Mükemmel demo için değil, sorunlu güncelleme için tasarlandı.",
+    "items": {
+      "process": {
+        "title": "Kalıcı süreç yok",
+        "copy": "QuiTwin ortamı hazırlar, Discord'u açar ve çıkar. Sistem tepsisinde bekleyen veya servis olarak çalışan bir şey yoktur."
+      },
+      "atomic": {
+        "title": "Atomik yayınlama",
+        "copy": "İndirmeler ve çalışma ortamı nesilleri hazırlanır, diske yazılır ve atomik olarak yayınlanır."
+      },
+      "native": {
+        "title": "Yerel güncellemeler yerel kalır",
+        "copy": "Discord kendi güncelleyicisini ve temiz ana makinesini korur. QuiTwin Squirrel'ı yeniden yazmaz veya istemciyi dondurmaz."
+      },
+      "cleanup": {
+        "title": "Bir dosya girer, artık kalmaz",
+        "copy": "Taşınabilir kurucu işi kurulu başlatıcıya devreder, kapanır ve başarı sesi çalmadan önce silinir."
+      }
+    }
+  },
+  "proof": {
+    "title": "Arıza durumunu zorla oluşturduk.",
+    "copy": "Gerçek bir Discord ana makinesi eski gösterildi ve yerel güncelleyiciyle güncellendi. Delta başarısız oldu, tam yedek güncelleme tamamlandı, Equicord doğrudan yeniden başlatmayı atlattı ve sonraki normal açılış ana makineyi temiz duruma döndürdü.",
+    "host": "Discord ana makine güncellemesi",
+    "completed": "tamamlandı",
+    "restart": "Equicord doğrudan yeniden başlatma",
+    "survived": "atlatıldı",
+    "portable": "Taşınabilir başlatıcı",
+    "deleted": "silindi",
+    "resident": "Kalıcı QuiTwin süreci",
+    "none": "yok"
+  },
+  "install": {
+    "lineOne": "İndir.",
+    "lineTwo": "Bir kez çalıştır.",
+    "lineThree": "Bitti.",
+    "copy": "QuiTwin Discord'u nerede olursa olsun bulur veya yoksa Stable sürümünü kurar. Equicord'u kurar, Discord'u açar, taşınabilir EXE'yi siler ve aradan çekilir.",
+    "button": "QuiTwin.exe al",
+    "latest": "En son sürüm",
+    "risk": "İstemci modları Discord tarafından desteklenmez ve Hizmet Koşullarını ihlal edebilir. Kullanım riski size aittir."
+  },
+  "footer": {
+    "by": "ArieX tarafından QuiTwin",
+    "releases": "Sürüm notları",
+    "license": "MIT lisansı",
+    "independent": "Discord, Equicord, Vencord ve Squirrel'dan bağımsızdır."
+  }
+}

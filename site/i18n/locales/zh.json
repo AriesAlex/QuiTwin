@@ -1,0 +1,118 @@
+{
+  "meta": {
+    "title": "QuiTwin - 不再被 Discord 更新移除的 Equicord",
+    "description": "Vencord 或 Equicord 总在 Discord 更新后消失？QuiTwin 只需运行一次，即可在 Windows 上安装耐更新的 Equicord 启动器。",
+    "ogAlt": "QuiTwin 让 Equicord 在 Discord 更新后依然保留"
+  },
+  "a11y": {
+    "skip": "跳至内容",
+    "primaryNav": "主导航",
+    "home": "QuiTwin 首页",
+    "productFacts": "QuiTwin 产品信息",
+    "logoAlt": "由紫色与青色两个交织 Q 组成的 QuiTwin 标志",
+    "status": "项目状态",
+    "verified": "已验证的 QuiTwin 行为"
+  },
+  "nav": {
+    "how": "工作原理",
+    "source": "源代码",
+    "language": "选择语言",
+    "download": "下载"
+  },
+  "hero": {
+    "titleFirst": "Discord 照常更新。",
+    "titleSecond": "Equicord 依然存在。",
+    "lede": "QuiTwin 会安装 Discord、Equicord 和耐更新的启动器。无需后台服务、计划任务，也不用反复打补丁。",
+    "download": "下载 QuiTwin.exe",
+    "platform": "Windows x64",
+    "mechanism": "查看工作原理",
+    "fineprint": "只需运行一次。安装成功后，下载的 EXE 会自动删除。",
+    "brandLineOne": "一套孪生运行环境",
+    "brandLineTwo": "对应一个原版宿主",
+    "statExe": "便携 EXE",
+    "statServices": "后台服务",
+    "statRuntime": "硬链接运行环境"
+  },
+  "trust": {
+    "license": "MIT 许可证",
+    "source": "公开源代码",
+    "channels": "Stable、PTB、Canary",
+    "windows": "Windows 10 和 11"
+  },
+  "problem": {
+    "title": "为什么客户端模组总会消失？",
+    "copyOne": "传统的 Vencord 与 Equicord 安装器会修改正在使用的 Discord 宿主。Discord 更新会用新的原版宿主替换它，因此补丁也随之消失。",
+    "copyTwo": "重新安装只能坚持到下一次更新。阻止更新则会让 Discord 最终无法启动。QuiTwin 改变的是启动边界本身。"
+  },
+  "mechanism": {
+    "titleFirst": "宿主保持原版。",
+    "titleSecond": "只修改它的孪生副本。",
+    "intro": "Discord 更新它所认识的安装目录。Equicord 则运行在由相同文件构成、按内容寻址的影子环境中。",
+    "steps": {
+      "stock": {
+        "title": "让 Discord 保持原版",
+        "copy": "真实应用目录始终可以逐字节更新，因此原生更新器可以正常工作。"
+      },
+      "twin": {
+        "title": "创建硬链接孪生环境",
+        "copy": "QuiTwin 使用 NTFS 硬链接创建不可变的影子环境，无需复制整套 Discord 安装。"
+      },
+      "equicord": {
+        "title": "在孪生环境中加载 Equicord",
+        "copy": "Equicord 在孪生环境里运行，而 Discord 看到的仍是原始可执行文件与资源路径。"
+      },
+      "rebuild": {
+        "title": "更新后重新构建",
+        "copy": "Discord 更换宿主后，下次启动会恢复原版状态并创建新的已修改孪生环境。"
+      }
+    }
+  },
+  "safeguards": {
+    "title": "为棘手的真实更新而做，不是只为顺利演示。",
+    "items": {
+      "process": {
+        "title": "没有常驻进程",
+        "copy": "QuiTwin 准备运行环境、启动 Discord，然后退出。托盘中没有等待进程，也不会运行系统服务。"
+      },
+      "atomic": {
+        "title": "原子发布",
+        "copy": "下载内容与运行环境会先暂存、写入磁盘，再以原子方式发布。"
+      },
+      "native": {
+        "title": "原生更新仍是原生更新",
+        "copy": "Discord 保留自己的更新器与原版宿主。QuiTwin 不会重写 Squirrel，也不会冻结客户端版本。"
+      },
+      "cleanup": {
+        "title": "只下载一个文件，不留下垃圾",
+        "copy": "便携安装器把任务交给已安装的启动器后关闭，并在播放成功提示音之前删除自身。"
+      }
+    }
+  },
+  "proof": {
+    "title": "我们主动复现了故障场景。",
+    "copy": "我们让真实 Discord 宿主变成旧版本，再通过原生更新器升级。差分更新失败后完整回退成功，Equicord 经受住了直接重启，下一次普通启动又将宿主恢复为原版。",
+    "host": "Discord 宿主更新",
+    "completed": "已完成",
+    "restart": "Equicord 直接重启",
+    "survived": "已保留",
+    "portable": "便携启动器",
+    "deleted": "已删除",
+    "resident": "QuiTwin 常驻进程",
+    "none": "无"
+  },
+  "install": {
+    "lineOne": "下载。",
+    "lineTwo": "运行一次。",
+    "lineThree": "完成。",
+    "copy": "QuiTwin 会在任意位置找到 Discord；如果尚未安装，则安装 Stable。随后它会安装 Equicord、启动 Discord、删除便携 EXE，然后退出。",
+    "button": "获取 QuiTwin.exe",
+    "latest": "最新版本",
+    "risk": "Discord 不支持客户端模组，使用它们可能违反服务条款。请自行承担风险。"
+  },
+  "footer": {
+    "by": "ArieX 开发的 QuiTwin",
+    "releases": "版本说明",
+    "license": "MIT 许可证",
+    "independent": "本项目独立于 Discord、Equicord、Vencord 与 Squirrel。"
+  }
+}
