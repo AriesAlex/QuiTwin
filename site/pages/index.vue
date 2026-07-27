@@ -383,7 +383,10 @@ figure {
 
   img {
     width: min(34vw, 460px);
+    height: auto;
     min-width: 260px;
+    aspect-ratio: 1;
+    object-fit: contain;
     filter: drop-shadow(0 34px 58px rgba($accent, 0.2));
   }
 }

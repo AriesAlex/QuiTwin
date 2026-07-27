@@ -42,6 +42,7 @@ QuiTwin is a Windows x64 Rust application that acts as both a portable installer
 - Keep interactive shapes and spacing consistent. Prefer calm filled controls and avoid a page made from boxes inside boxes.
 - Prefer flex for simple one-dimensional layout and use grid only when the content has a real two-dimensional relationship.
 - Use the project's icon library for interface and brand icons instead of hand-drawn SVGs or text glyph substitutes.
+- Preserve image proportions explicitly. If responsive CSS overrides the width of an image that also has HTML `width` and `height` attributes, set `height: auto` and use `object-fit: contain` where the box can constrain it.
 - Keep the GitHub Pages base path configurable through `NUXT_APP_BASE_URL`; never hardcode asset paths that break `/QuiTwin/`.
 - All user-facing copy and metadata must exist for EN, RU, SR, PL, TR, FR, AR, and ZH. Keep locale objects centralized in `site/shared/locales.ts`.
 - Treat translations as native copy adaptations, not line-by-line translations. Preserve meaning and brevity while using natural phrasing for each locale.
