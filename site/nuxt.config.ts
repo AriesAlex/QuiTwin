@@ -5,6 +5,7 @@ import { SITE_LOCALES } from './shared/locales'
 const cargoManifest = readFileSync(new URL('../Cargo.toml', import.meta.url), 'utf8')
 const projectVersion = cargoManifest.match(/^version = "([^"]+)"$/m)?.[1]
 const appBaseURL = process.env.NUXT_APP_BASE_URL || '/'
+const siteUrl = new URL(process.env.NUXT_PUBLIC_SITE_URL ?? 'https://quitwin.ariex.ru').href
 
 if (!projectVersion)
   throw new Error('Could not read the QuiTwin version from Cargo.toml')
@@ -57,6 +58,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       projectVersion,
+      siteUrl,
     },
   },
   css: [
@@ -67,7 +69,7 @@ export default defineNuxtConfig({
     payloadExtraction: false,
   },
   i18n: {
-    baseUrl: 'https://ariesalex.github.io',
+    baseUrl: siteUrl,
     defaultLocale: 'en',
     strategy: 'prefix_except_default',
     locales: SITE_LOCALES.map(locale => ({ ...locale })),

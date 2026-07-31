@@ -58,8 +58,6 @@ jobs:
         run: pnpm typecheck
 
       - name: Generate static site
-        env:
-          NUXT_APP_BASE_URL: /${{ github.event.repository.name }}/
         run: pnpm generate
 
       - name: Verify generated site

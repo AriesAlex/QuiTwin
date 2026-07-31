@@ -2,7 +2,7 @@ import { access, readFile, stat } from 'node:fs/promises'
 import { join } from 'node:path'
 
 const output = join(import.meta.dirname, '..', '.output', 'public')
-const siteUrl = 'https://ariesalex.github.io/QuiTwin/'
+const siteUrl = new URL(process.env.NUXT_PUBLIC_SITE_URL ?? 'https://quitwin.ariex.ru').href
 const cargoManifest = await readFile(join(import.meta.dirname, '..', '..', 'Cargo.toml'), 'utf8')
 const projectVersion = cargoManifest.match(/^version = "([^"]+)"$/m)?.[1]
 const locales = [
@@ -36,8 +36,8 @@ for (const locale of locales) {
   requireMatch(html, /<html[^>]*\bdir="([^"]+)"/, locale.dir, `${locale.route || 'en'} dir`)
   requireMatch(html, /<link id="i18n-can" rel="canonical" href="([^"]+)"/, canonical, `${locale.route || 'en'} canonical`)
 
-  if (html.includes('/QuiTwin/QuiTwin/'))
-    throw new Error(`${locale.route || 'en'} contains a doubled GitHub Pages base path`)
+  if (html.includes('ariesalex.github.io'))
+    throw new Error(`${locale.route || 'en'} still references GitHub Pages`)
   if (!html.includes(`${siteUrl}og.png`))
     throw new Error(`${locale.route || 'en'} is missing its social image`)
   if (!html.includes('application/ld+json'))

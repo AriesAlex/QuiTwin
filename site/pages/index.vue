@@ -72,9 +72,9 @@ import { SITE_LOCALES } from '~/shared/locales'
 
 const downloadUrl = 'https://github.com/AriesAlex/QuiTwin/releases/latest/download/QuiTwin.exe'
 const repositoryUrl = 'https://github.com/AriesAlex/QuiTwin'
-const siteUrl = 'https://ariesalex.github.io/QuiTwin/'
 const runtimeConfig = useRuntimeConfig()
 const baseURL = runtimeConfig.app.baseURL
+const siteUrl = new URL(runtimeConfig.public.siteUrl).href
 const { locale, t } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const i18nHead = useLocaleHead({ seo: true })

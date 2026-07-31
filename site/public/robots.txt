@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ariesalex.github.io/QuiTwin/sitemap.xml
+Sitemap: https://quitwin.ariex.ru/sitemap.xml
